@@ -2,8 +2,10 @@ library(shiny)
 library(knitr)
 library(readr)
 
-options(repos = BiocInstaller::biocinstallRepos())
-getOption("repos")
+r <- getOption("repos")
+r <- append(BiocManager::repositories(), r)
+options(repos = r)
+
 library(sangerseqR)
 library(Biostrings)
 library(BiocGenerics)
@@ -106,12 +108,11 @@ ui <- fluidPage(
               alignment to the reference sequence.'),
 
           div(id='output', class='simpleDiv',
-              'Last update: 30 November 2018'),
+              'Last update: 09 August 2020'),
           
           br()
           ),
-        
-        
+
         width = 8
                   ) 
         )
@@ -121,32 +122,24 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   observeEvent(input$submit, {
-    # con <- file(paste0(input$prefix_file, ".log"))
-    # sink(con, append=TRUE)
-    # sink(con, append=TRUE, type="message")
-    # print()
-    
+
     outp1 <- files_fun(archive = input$archive, input$prefix_file, submit_count = input$submit)
     
     param_str <- paste0("Signal/Noise Ratio for Peak Detection: ", input$ratio_value, "\n", 
-                            "Offset for matching the 5' homozygous part of the sequence to the reference: ", input$beginning_start,"\n",
-                            "Length of the homozygous part of the sequence to match the reference: ", input$homo_match_len, "\n",
-                            "Offset at 3' end of the sequence to find matches for heterozygous part: ", input$offset_3p, "\n")
+                        "Offset for matching the 5' homozygous part of the sequence to the reference: ", 
+                        input$beginning_start,"\n",
+                        "Length of the homozygous part of the sequence to match the reference: ", 
+                        input$homo_match_len, "\n",
+                        "Offset at 3' end of the sequence to find matches for heterozygous part: ", 
+                        input$offset_3p, "\n")
     
     write(param_str, file=outp1[2], append=TRUE)
-    
-    # sink(outp1[2], append = T)
-    #     print(param_str, quote = F)
-    # sink()
-    # 
     
     ref_file <- list.files(path = outp1[3], pattern = "reference.txt", full.names = T, recursive = T)
     if (length(ref_file) != 1){
       output$error_txt <- renderText({outp1[[1]]})
       output$match_txt <- renderText({paste0(" ERROR: Reference file not found. Check that it has correct name.")
       })
-      #stop("reference not found")
-      #tryCatch(stop("reference not found"))
     } else {
       input_reference <- gsub("[\r\n]", "", (read_file(ref_file)))
       input_reference <- gsub("[\n]", "", input_reference)
@@ -158,8 +151,7 @@ server <- function(input, output, session) {
           outp2 <- sangerseq_function(input_file, ratio_value = input$ratio_value, 
                                       make_chromatogram = input$make_chromatogram,
                                       outp1 = outp1) })
-        #if (length(outp2[[2]])<(input$beginning_start + input$homo_match_len + input$offset_3p)) {next}
-        
+
         withProgress(message = paste0("Calculating allele shift", j), min = 0, max = 1, value = 1, {
           try(phaseShift_function(both_alleles = outp2[[2]], input_reference, beginning_start = input$beginning_start,
                                   homo_match_len = input$homo_match_len,
@@ -177,15 +169,7 @@ server <- function(input, output, session) {
                                            file.copy(paste0(outp1[3], "/", out_zip_name), file)
                                          },
                                          contentType = "application/zip")
-      
-      
-      # observeEvent(input$reset, {
-      #   unlink(outp1[3], recursive = T)
-      #   unlink(out_zip_name)
-      # })
-      
-      
-      
+
       output$sequences_txt <- renderText({
         paste(out_zip_name)
       })
@@ -198,8 +182,6 @@ server <- function(input, output, session) {
     session$onSessionEnded(function() { unlink(outp1[3], recursive = TRUE) } )
     
   }, once = F) 
-  
-  
   
 }
 
