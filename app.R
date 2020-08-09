@@ -1,8 +1,10 @@
 library(shiny)
 library(knitr)
 library(readr)
+library("crayon")
 
 r <- getOption("repos")
+chooseBioCmirror(ind = 0)
 r <- append(BiocManager::repositories(), r)
 options(repos = r)
 
@@ -10,11 +12,10 @@ library(sangerseqR)
 library(Biostrings)
 library(BiocGenerics)
 library("msa")
-library("readr")
-library("crayon")
 
 source("hetindelFunctions.R")
 source("indelForShiny.R")
+
 
 ui <- fluidPage(
   
