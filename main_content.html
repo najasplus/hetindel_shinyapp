@@ -1,0 +1,62 @@
+<head>
+    <title>Hetindel</title>
+</head>
+        
+<body>
+    <h2>About</h2>
+        <div id='about', class='simpleDiv'>
+            This app is designed to analyze heterozygous and homozygous indels 
+            using <strong>.ab1</strong> Sanger sequnce files and reference sequence in text format as a <strong>.txt</strong> file.
+        </div>
+          
+    <h2>Instructions</h2>
+    
+    <h3>Input</h3>
+        <div id='instructions', class='simpleDiv'>
+              Create a .zip file containing your .ab1 chromatograms and corresponding reference sequence in
+              text format (no fasta header!) as an individual .txt file with a name ending with "reference.txt"
+        </div>
+        <ul>
+            <li>The expected indel should occur 70 or more bases from the 5\' and 3\' ends of the sequence
+            <li>sequences may be in forward and reverse orientation to the reference 
+            <li>the reference sequence should correspond to the sequenced PCR product
+            <li>No non-IUPAC characters are allowed in the reference sequence
+        </ul>
+        <div id='instructions', class='simpleDiv'>
+              Upload your .zip archive to the app
+        </div>
+        
+        <h3>Parameters'</h3>
+        <ul>
+            <li>you can change the chromatogram peak detection with Signal/Noise Ratio setting. 
+                          Reduce it when primary and secondary peaks are different in heigth. Increase when the noise level is high
+            <li>check "Make Chromatograms" if you want to get the sequence chromatograms as pdf 
+                          to analyze peak detection (recommended)
+            <li>Choose 5\' offset and sequence length for matching the homozygous part of sequence to the reference. 
+                          Use this setting to avoid the areas rich in polymorphysms or bad sequence
+            <li>Choose 3\' offset and sequence length for matching the homozygous part of sequence to the reference
+            <li>For more reliable allele determination it is recommeded that tested homozygous and heterozygous 
+                          parts of the sequence would be in the vicinity of the indel
+        </ul>
+        
+        <h3>Output</h3>
+        <div id='output', class='simpleDiv'>
+            As an output you receive a .zip file containing your original files, the chromatograms as .pdf (optionally), and two txt files. 
+            <br>
+            The file <strong>*_sequences.txt</strong> contains the sequence data as a IUPAC codes, and predicted deconvolved alleles
+            <br>
+            File <strong>*_match.txt</strong> contains the information about the parameters used for the sequences processing, and for each individual sequence phase shift between the alleles and alignment of predicted alleles to the reference. 
+        </div>
+        <br>
+        
+        <h3>Authors</h3>
+        <div id='Authors', class='simpleDiv'>
+            <strong>Robert Deibel, Hannes Preiß, Anastasia Eskova</strong>
+            <br>
+            Max-Planck-Institute for Developmental Biology, Tübingen, Germany
+        </div>
+        
+        <div id='output', class='simpleDiv'>
+            Last update: 11 August 2020
+        </div>
+</body>
