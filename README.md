@@ -11,3 +11,6 @@ The **Hetindel** package was developed to identify genomic insertions or deletio
 ## References
 1. Dmitriev, D. A., & Rakitov, R. A. (2008). Decoding of superimposed traces produced by direct sequencing of heterozygous indels. PLoS Comput Biol, 4(7), e1000113. doi:10.1371/journal.pcbi.1000113
 2. Hill, J. T., Demarest, B. L., Bisgrove, B. W., Su, Y. C., Smith, M., & Yost, H. J. (2014). Poly peak parser: Method and software for identification of unknown indels using sanger sequencing of polymerase chain reaction products. Dev Dyn, 243(12), 1632-1636. doi:10.1002/dvdy.24183# New Document
+
+## To cite:
+[Hetindel (RRID:SCR_018922)](https://scicrunch.org/resolver/SCR_018922)
